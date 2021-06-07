@@ -16,4 +16,6 @@ Universidad de Buenos Aires
 
 ## Fuente
 
-Se utilizo el codigo de la clase Threads del [github](https://github.com/Taller-de-Programacion/threads/blob/master/tutorial-interactivo/03_is_prime_parallel_by_inheritance.cpp) de la materia Taller de Programación I 
+Se utilizó el codigo de la clase Threads del [github](https://github.com/Taller-de-Programacion/threads/blob/master/tutorial-interactivo/03_is_prime_parallel_by_inheritance.cpp) de la materia Taller de Programación I.
+
+Se utilizó el codigo de la clase OSError de [la presentacion de excepciones](https://raw.githubusercontent.com/Taller-de-Programacion/clases/master/manejodeerrores/bin/manejodeerrores-handout.pdf) de la materia Taller de Programación I.

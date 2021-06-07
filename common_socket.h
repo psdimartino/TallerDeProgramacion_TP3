@@ -6,14 +6,10 @@
 #include <iostream>
 
 class Socket {
-   int sfd;
-   struct addrinfo hints;
-   struct sockaddr peer_addr;
-
  private:
-    int obtenerGanadorColumnas() const;
-    int obtenerGanadorFilas() const;
-    int obtenerGanadorDiagonales() const;
+    int sfd;
+    struct addrinfo hints;
+    struct sockaddr peer_addr;
 
  public:
     void connect(const char *service, const char *port );

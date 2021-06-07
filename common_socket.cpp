@@ -1,3 +1,4 @@
+#include <stdexcept>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <sys/un.h>
@@ -7,18 +8,24 @@
 #include <unistd.h>
 #include <string.h>
 #include <stdbool.h>
+#include <exception>
 
+#include "common_OSError.h"
 #include "common_socket.h"
 
 Socket::Socket() {
+    memset(&hints, 0, sizeof(addrinfo));
+    memset(&peer_addr, 0, sizeof(sockaddr));
     this->hints.ai_family = AF_INET;
     this->hints.ai_socktype = SOCK_STREAM;
 }
 
-void Socket::connect(const char *service, const char *port ) {
+void Socket::connect(const char *port, const char *service ) {
     struct addrinfo *result, *it;
     if ((getaddrinfo(port, service, &this->hints, &result)) != 0) {
-        // error_exit_msg("Error in getaddrinfo");
+        std::cerr << "Error in getaddrinfo" << std::endl;
+        throw std::invalid_argument("Error en getaddrinfo. Puerto o direccion incorrecta");
+        return;
     }
     for ( this->sfd = 0, it = result; it != NULL; it = it->ai_next ) {
         this->sfd = socket(it->ai_family, it->ai_socktype, it->ai_protocol);
@@ -30,13 +37,14 @@ void Socket::connect(const char *service, const char *port ) {
         }
     }
     freeaddrinfo(result);
-    // error_exit_msg("Error while trying to connect");
+    throw std::runtime_error("Error while trying to connect");
 }
 
 void Socket::bind(const char *port ) {
     struct addrinfo *result, *it;
     if ((getaddrinfo(NULL, port, &this->hints, &result)) != 0) {
-        // error_exit_msg("Error in getaddrinfo");
+        std::cerr << "Error in getaddrinfo" << std::endl;
+        return;
     }
     it = result;
     for ( this->sfd = 0; it != NULL; it = it->ai_next ) {
@@ -49,7 +57,7 @@ void Socket::bind(const char *port ) {
         }
     }
     freeaddrinfo(result);
-    // error_exit_msg("Error while trying to bind");
+    throw std::runtime_error("Error while trying to bind");
 }
 
 void Socket::accept() {
@@ -57,7 +65,8 @@ void Socket::accept() {
     socklen_t peer_addr_len = sizeof(peer_addr);
     int cfd;
     if ( (cfd = ::accept(this->sfd, &peer_addr, &peer_addr_len)) == -1 ) {
-        // error_exit_msg("Error while trying to accept the connection");
+        throw std::runtime_error("Error while trying to accept the connection");
+        return;
     }
     close(this->sfd);
     this->sfd = cfd;
@@ -65,7 +74,8 @@ void Socket::accept() {
 
 void Socket::listen() {
     if ( ::listen(this->sfd, 10) == -1 ) {
-        // error_exit_msg("Error while trying to listen");
+        throw std::runtime_error("Error while trying to listen");
+        return;
     }
 }
 

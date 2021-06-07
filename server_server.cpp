@@ -31,7 +31,6 @@ int main(int argc, char *argv[]) {
     socket.bind(argv[1]);
     socket.listen();
     socket.accept();
-    socket.connect(argv[2], argv[2]);
     char msg[100];
     socket.read(msg);
     std::cout << msg;
