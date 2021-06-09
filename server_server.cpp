@@ -31,8 +31,11 @@ int main(int argc, char *argv[]) {
     socket.bind(argv[1]);
     socket.listen();
     socket.accept();
-    char msg[100];
-    socket.read(msg);
-    std::cout << msg;
+    while (1) {
+        std::cerr << "while: " << std::endl;
+        IAccion* accion = socket.read();
+        accion->excecute();
+        delete accion;
+    }
     return 0;
 }

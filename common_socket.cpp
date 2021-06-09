@@ -172,28 +172,34 @@ std::string Socket::readString() {
 }
 
 IAccion *Socket::read() {
+    std::cerr << "Socket read" << std::endl;
     uint8_t hexa;
     recv(this->sfd, &hexa, 1, MSG_NOSIGNAL);
     switch (hexa) {
         case LISTAR:
+            std::cerr << "Listar" << std::endl;
             return new Listar();
             break;
         case CREAR: {
+                std::cerr << "Crear" << std::endl;
                 std::string nombre = readString(); 
                 return new Crear(nombre);
             }
             break;
         case UNIRSE: {
+                std::cerr << "Unirse" << std::endl;
                 std::string nombre = readString(); 
                 return new Unirse(nombre);
             }
             break;
         case JUGAR: {
                 recv(this->sfd, &hexa, 1, MSG_NOSIGNAL);
-                uint8_t x = hexa >> 4;
+                uint8_t x = (hexa >> 4) & 0x0F;
                 uint8_t y = hexa & 0x0F;
+                std::cerr << "Jugar " << x << y << std::endl;
                 return new Jugar(x, y);
             }
             break;
     }
+    return nullptr;
 }
