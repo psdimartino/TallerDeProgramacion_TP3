@@ -5,7 +5,7 @@
 #include <netdb.h>
 #include <iostream>
 
-#include "Action.cpp"
+#include "common_Accion.h"
 
 #define LISTAR 0x6C
 #define CREAR 0x6E

@@ -194,9 +194,9 @@ IAccion *Socket::read() {
             break;
         case JUGAR: {
                 recv(this->sfd, &hexa, 1, MSG_NOSIGNAL);
-                uint8_t x = (hexa >> 4) & 0x0F;
-                uint8_t y = hexa & 0x0F;
-                std::cerr << "Jugar " << x << y << std::endl;
+                int x = (hexa >> 4) & 0x0F;
+                int y = hexa & 0x0F;
+                std::cerr << "Jugar " << hexa << x << y << std::endl;
                 return new Jugar(x, y);
             }
             break;

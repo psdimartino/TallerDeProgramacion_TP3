@@ -1,11 +1,10 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "server_TaTeTi.h"
 #include "common_socket.h"
 
 int main(int argc, char *argv[]) {
-    // TaTeTi tateti;
+    TaTeTi tateti;
 
     // for (int ronda = 0; ronda < 9 ; ronda++) {
     //     int ganador, i = 0, j = 0, turno = ronda % 2 + 1;
@@ -27,15 +26,14 @@ int main(int argc, char *argv[]) {
     //     }
     // }
 
-    Socket socket;
-    socket.bind(argv[1]);
-    socket.listen();
-    socket.accept();
-    while (1) {
-        std::cerr << "while: " << std::endl;
-        IAccion* accion = socket.read();
-        accion->excecute();
-        delete accion;
-    }
+    // Socket socket;
+    // socket.bind(argv[1]);
+    // socket.listen();
+    // socket.accept();
+    // while (1) {
+    //     IAccion* accion = socket.read();
+    //     socket.send(accion->excecute(tateti));
+    //     delete accion;
+    // }
     return 0;
 }
