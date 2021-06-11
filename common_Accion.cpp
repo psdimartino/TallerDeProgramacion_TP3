@@ -1,27 +1,45 @@
-#include <iostream>
-#include <map>
-
 #include "common_Accion.h"
 
-std::string Listar::excecute(std::map<std::string, TaTeTi> &tatetis, TaTeTi &tateti, int &jugador) {
-    std::string result = "Partidas:";
+void Listar::excecute(std::map<std::string, TaTeTi> &tatetis, std::string &nombrePartida, int &jugador) {
+    result << "Partidas:\n";
     for (auto const &pair: tatetis) {
-        result += " - " + pair.first + "\n";
+        result << " - " + pair.first + "\n";
     }
-    return result;
 }
 
-std::string Crear::excecute(std::map<std::string, TaTeTi> &tatetis, TaTeTi &tateti, int &jugador) {
-    std::string result << tateti;
-    return << tateti;
+void Crear::excecute(std::map<std::string, TaTeTi> &tatetis, std::string &nombrePartida, int &jugador) {
+    if (tatetis.count(nombre) != 0) {
+        result << "La partida ya existe";
+        return;
+    }
+    tatetis.emplace(nombre, TaTeTi());
+    jugador = 1;
+    nombrePartida = std::move(nombre);
+    result << tatetis[nombre];
 }
 
-std::string Unirse::excecute(std::map<std::string, TaTeTi> &tatetis, TaTeTi &tateti, int &jugador) {
-
+void Unirse::excecute(std::map<std::string, TaTeTi> &tatetis, std::string &nombrePartida, int &jugador) {
+    if (tatetis.count(nombre) == 0) {
+        result << "La partida no existe";
+        return;
+    }
+    jugador = 2;
+    nombrePartida = std::move(nombre);
+    result << tatetis[nombre];
+    tatetis[nombrePartida].esperarElTurnoDe(jugador);
 }
 
-std::string Jugar::excecute(std::map<std::string, TaTeTi> &tatetis, TaTeTi &tateti, int &jugador) {
+void Jugar::excecute(std::map<std::string, TaTeTi> &tatetis, std::string &nombrePartida, int &jugador) {
+    if (!tatetis[nombrePartida].sePuedeJugar(x, y)) {
+        result << "La posicion no es valida";
+    }
+    tatetis[nombrePartida].jugar(jugador, x, y);
+    tatetis[nombrePartida].esperarElTurnoDe(jugador);
+    result << tatetis[nombrePartida];
+}
 
+std::string const& IAccion::getResult() const {
+    return std::move(result.str());
 }
 
 std::string const& Crear::getNombre() const {

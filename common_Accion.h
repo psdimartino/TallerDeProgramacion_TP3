@@ -3,18 +3,23 @@
 
 #include <iostream>
 #include <map>
+#include <sstream> 
 
 #include "server_TaTeTi.h"
 
 class IAccion {
+    protected:
+     std::stringstream result;
     public:
      virtual ~IAccion() {}
-     virtual std::string excecute(std::map<std::string, TaTeTi> &tatetis, TaTeTi &tateti, int &jugador) = 0;
+     virtual void excecute(std::map<std::string, TaTeTi> &tatetis, std::string &nombrePartida, int &jugador) = 0;
+    //  friend std::ostream& operator<<(std::string &os, const IAccion &other);
+     std::string const& getResult() const;
 };
 
 class Listar: public IAccion {
     public:
-     virtual std::string excecute(std::map<std::string, TaTeTi> &tatetis, TaTeTi &tateti, int &jugador);
+     virtual void excecute(std::map<std::string, TaTeTi> &tatetis, std::string &nombrePartida, int &jugador);
 };
 
 class Crear: public IAccion {
@@ -24,7 +29,7 @@ class Crear: public IAccion {
     public:
      Crear(std::string nombre);
      std::string const &getNombre() const;
-     virtual std::string excecute(std::map<std::string, TaTeTi> &tatetis, TaTeTi &tateti, int &jugador);
+     virtual void excecute(std::map<std::string, TaTeTi> &tatetis, std::string &nombrePartida, int &jugador);
 };
 
 class Unirse: public IAccion {
@@ -34,7 +39,7 @@ class Unirse: public IAccion {
     public:
      Unirse(std::string nombre);
      std::string const &getNombre() const;
-     virtual std::string excecute(std::map<std::string, TaTeTi> &tatetis, TaTeTi &tateti, int &jugador);
+     virtual void excecute(std::map<std::string, TaTeTi> &tatetis, std::string &nombrePartida, int &jugador);
 
 };
 
@@ -44,9 +49,9 @@ class Jugar: public IAccion {
     
     public:
      Jugar(int &x, int &y);
-     virtual std::string excecute(std::map<std::string, TaTeTi> &tatetis, TaTeTi &tateti, int &jugador);
      uint8_t getX() const;
      uint8_t getY() const;
+     virtual void excecute(std::map<std::string, TaTeTi> &tatetis, std::string &nombrePartida, int &jugador);
 };
 
 #endif  // SERVER_ACCION_H_

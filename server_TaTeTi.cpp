@@ -3,13 +3,13 @@
 TaTeTi::TaTeTi() {}
 
 std::ostream& operator<<(std::ostream &os, const TaTeTi &t) {
-    std::cout << "Quedan espacios libres: " << t.quedanEspaciosLibres() << std::endl;
-    std::cout << "Ganador: " << t.obtenerGanador() << std::endl;
+    // std::cout << "Quedan espacios libres: " << t.quedanEspaciosLibres() << std::endl;
+    // std::cout << "Ganador: " << t.obtenerGanador() << std::endl;
     for (int i = 0; i < 3; ++i) {
         for (int j = 0; j < 3; ++j) {
-            std::cout << "  " << t.tablero[i][j] << "  ";
+            os << "  " << t.tablero[i][j] << "  ";
         }
-        std::cout << std::endl;
+        os << std::endl;
     }
     return os;
 }
@@ -24,6 +24,10 @@ TaTeTi::TaTeTi(TaTeTi&& other) {
 
 bool TaTeTi::sePuedeJugar(int &i, int &j) const {
     return tablero[i][j] == VACIO && i < 3  && j < 3;
+}
+
+bool TaTeTi::estaTerminada() const {
+    return (obtenerGanador() != 0) || quedanEspaciosLibres();
 }
 
 void TaTeTi::jugar(int &jugador, int &i, int &j) {
@@ -98,4 +102,5 @@ int TaTeTi::obtenerGanador() const {  // 0 es sin ganador
     }
     return 0;
 }
+
 

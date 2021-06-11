@@ -14,7 +14,7 @@ class TaTeTi {
 
  public:
     TaTeTi();
-    friend std::ostream& operator<<(std::ostream &os, const TaTeTi &other);
+    friend std::ostream& operator<<(std::ostream &os, const TaTeTi &t);
     TaTeTi& operator=(const TaTeTi&) = delete;
     TaTeTi& operator=(TaTeTi&& other);
     TaTeTi(TaTeTi&& other);
@@ -23,6 +23,7 @@ class TaTeTi {
     bool sePuedeJugar(int &i, int &j) const;
     bool quedanEspaciosLibres() const;
     int obtenerGanador() const;
+    bool estaTerminada() const;
 };
 
 #endif  // SERVER_TATETI_H_

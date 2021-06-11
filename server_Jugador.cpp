@@ -1,4 +1,5 @@
 #include "server_Jugador.h"
+#include "common_socket.h"
 
 Jugador::Jugador(std::map<std::string, TaTeTi> &tatetis, Socket &socket)
     : tatetis(tatetis), socket(socket) {}
@@ -26,11 +27,13 @@ bool Jugador::estaEnUnaPartida() const {
 }
 
 void Jugador::run() {
-    while (estaEnUnaPartida() && !partida.estaTerminada()) {
+    while (estaEnUnaPartida() && !partida().estaTerminada()) {
         IAccion* accion = socket.read();
-        socket.send(accion->excecute(tatetis, partida(), jugador));
+        accion->excecute(tatetis, nombrePartida, jugador);
+        socket.send(accion->getResult());
         delete accion;
     }
+    // Enviar resultados de la partida
 }
 
 // for (int ronda = 0; ronda < 9 ; ronda++) {
