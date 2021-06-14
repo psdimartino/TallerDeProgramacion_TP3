@@ -1,4 +1,4 @@
-#include "Thread.h"
+#include "server_Thread.h"
 
 Thread::Thread() {}
 
@@ -23,4 +23,8 @@ Thread& Thread::operator=(Thread&& other) {
         this->thread = std::move(other.thread);
     }
     return *this;
+}
+
+bool Thread::isDead() const {
+    return !this->is_running;
 }

@@ -15,16 +15,17 @@
 class Socket {
  private:
     int sfd;
-    struct addrinfo hints;
-    struct sockaddr peer_addr;
-    void sendHexa(const char hexa) const;
+    explicit Socket(int sfd);
+    void send(const char &hexa);
+    void read(char &hexa);
+    void connect(const char *service, const char *port, addrinfo &hints);
+    void bind(const char *port, addrinfo &hints);
+    void listen();
 
  public:
-    void connect(const char *service, const char *port );
-    void bind(const char *port);
-    void accept();
-    void listen();
-    Socket();
+    explicit Socket(const char *port);
+    Socket(const char *port, const char *service);
+    Socket accept();
     ~Socket();
     void send(Listar const &listar);
     void send(Crear const &crear);
@@ -35,11 +36,12 @@ class Socket {
     IAccion *read();
     std::istream& operator>>(std::istream& is); // Para hacer el send (recibe desde istream)
     std::ostream& operator<<(std::ostream& is);  // Para hacer el read, emite a ostream
+    bool isUp() const;
     
+    Socket& operator=(const Socket&) = delete;
    //  friend std::ostream& operator<<(std::ostream &os, const Socket &other);
-   //  Socket& operator=(const Socket&) = delete;
-   //  Socket& operator=(Socket&& other);
-   //  Socket(Socket&& other);
+    Socket& operator=(Socket&& other);
+    Socket(Socket&& other);
 };
 
 #endif  // COMMON_SOCKET_H_

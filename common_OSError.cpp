@@ -5,7 +5,7 @@
 
 #include "common_OSError.h"
 
-OSError::OSError(const char*fmt, ...) noexcept {
+OSError::OSError(const char* fmt, ...) noexcept {
     _errno = errno;
     va_list args;
     va_start(args, fmt);

@@ -2,13 +2,14 @@
 #include "common_socket.h"
 
 Jugador::Jugador(std::map<std::string, TaTeTi> &tatetis, Socket &socket)
-    : tatetis(tatetis), socket(socket) {}
+    : socket(std::move(socket)), tatetis(tatetis) {}
 
 Jugador& Jugador::operator=(Jugador&& other) {
     if (this != &other) {
         this->jugador = other.jugador;
         this->nombrePartida = std::move(other.nombrePartida);
-        this->tatetis = std::move(other.tatetis);
+        // this->tatetis = other.tatetis;
+        this->socket = std::move(other.socket);
     }
     return *this;
 }
@@ -17,9 +18,11 @@ TaTeTi& Jugador::partida() {
     return tatetis[nombrePartida];
 }
 
-Jugador::Jugador(Jugador&& other) : tatetis(other.tatetis) {
+Jugador::Jugador(Jugador&& other) : socket(std::move(other.socket)), tatetis(other.tatetis){
     this->jugador = other.jugador;
     this->nombrePartida = std::move(other.nombrePartida);
+    // this->tatetis = other.tatetis;
+    this->socket = std::move(other.socket);
 }
 
 bool Jugador::estaEnUnaPartida() const {
@@ -27,12 +30,17 @@ bool Jugador::estaEnUnaPartida() const {
 }
 
 void Jugador::run() {
-    while (estaEnUnaPartida() && !partida().estaTerminada()) {
+    std::cerr << "Jugador is playing " << socket.isUp() << std::endl;
+    is_running = true;
+    while (!estaEnUnaPartida() || !partida().estaTerminada()) {
         IAccion* accion = socket.read();
+        std::cout << "Accion leida " << std::endl;
         accion->excecute(tatetis, nombrePartida, jugador);
         socket.send(accion->getResult());
         delete accion;
     }
+    std::cout << "fin run " << std::endl;
+    is_running = false;
     // Enviar resultados de la partida
 }
 

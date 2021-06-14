@@ -2,7 +2,7 @@
 #define SERVER_JUGADOR_H_
 
 #include <map>
-#include "server_TaTeTi.h"
+#include "common_TaTeTi.h"
 #include "server_Thread.h"
 #include "common_socket.h"
 
@@ -10,9 +10,10 @@
 class Jugador : public Thread {
  private:
     Socket socket;
-    int jugador;
+    char jugador = VACIO;
     std::string nombrePartida;
     std::map<std::string, TaTeTi> &tatetis;
+
     TaTeTi& partida();
     bool estaEnUnaPartida() const;
 
@@ -22,7 +23,7 @@ class Jugador : public Thread {
     Jugador& operator=(Jugador&& other);
     Jugador(Jugador&& other);
 
-    virtual void run();
+    virtual void run() override;
 };
 
 #endif  // SERVER_JUGADOR_H_

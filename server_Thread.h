@@ -3,11 +3,13 @@
 
 #include <thread>
 #include <utility>
+#include <atomic>
 
 class Thread {
     private:
         std::thread thread;
-
+    protected:
+        std::atomic<bool> is_running;
     public:
         Thread();
         void start();
@@ -18,6 +20,8 @@ class Thread {
         Thread& operator=(const Thread&) = delete;
         Thread(Thread&& other);
         Thread& operator=(Thread&& other);
+        bool isDead() const;
+        
 };
 
 #endif  // THREAD_H_

@@ -2,9 +2,20 @@
 #include <string.h>
 
 #include "common_socket.h"
+#include "server_Aceptador.h"
 
 int main(int argc, char *argv[]) {
-    TaTeTi tateti;
+    std::map<std::string, TaTeTi> tatetis;
+    Socket socket(argv[1]);
+    Thread *t = new Aceptador(socket);
+    std::cerr << "New aceptador" << std::endl;
+    t->start();
+    std::cerr << "Running thread aceptador" << std::endl;
+    char c = 'a';
+    while (c != 'q') {
+        std::cin >> c;
+    }
+    // t.stop();
 
     // for (int ronda = 0; ronda < 9 ; ronda++) {
     //     int ganador, i = 0, j = 0, turno = ronda % 2 + 1;
