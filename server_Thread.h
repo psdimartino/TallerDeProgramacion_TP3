@@ -1,5 +1,5 @@
-#ifndef THREAD_H_
-#define THREAD_H_
+#ifndef SERVER_THREAD_H_
+#define SERVER_THREAD_H_
 
 #include <thread>
 #include <utility>
@@ -21,7 +21,7 @@ class Thread {
         Thread(Thread&& other);
         Thread& operator=(Thread&& other);
         bool isDead() const;
-        
+
 };
 
-#endif  // THREAD_H_
+#endif  // SERVER_THREAD_H_

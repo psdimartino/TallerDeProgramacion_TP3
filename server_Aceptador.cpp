@@ -1,11 +1,12 @@
 #include <vector>
+#include <utility>
 
 #include "server_Aceptador.h"
 #include "server_Jugador.h"
 #include "server_Thread.h"
 
 Aceptador::Aceptador(Socket &socket)
-    : socket(std::move(socket)), seguir_aceptando(true){}
+    : socket(std::move(socket)), seguir_aceptando(true) {}
 
 Aceptador& Aceptador::operator=(Aceptador&& other) {
     if (this != &other) {

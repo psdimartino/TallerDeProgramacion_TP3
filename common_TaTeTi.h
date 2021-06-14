@@ -1,5 +1,5 @@
-#ifndef SERVER_TATETI_H_
-#define SERVER_TATETI_H_
+#ifndef COMMON_TATETI_H_
+#define COMMON_TATETI_H_
 
 #include <iostream>
 #include <mutex>
@@ -37,4 +37,4 @@ class TaTeTi {
     void esperarElTurnoDe(char const &jugador);
 };
 
-#endif  // SERVER_TATETI_H_
+#endif  // COMMON_TATETI_H_

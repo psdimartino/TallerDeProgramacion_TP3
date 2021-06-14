@@ -1,3 +1,5 @@
+#include <utility>
+#include <string>
 #include "common_Accion.h"
 
 Crear::Crear(std::string const nombre) : nombre(nombre) {}
@@ -51,7 +53,7 @@ void Jugar::excecute(std::map<std::string, TaTeTi> &tatetis, std::string &nombre
             result << "Felicitaciones! Ganaste!" << std::endl;
         } else {
             result << "Has perdido. Segui intentando!" << std::endl;
-        };
+        }
     }
 }
 

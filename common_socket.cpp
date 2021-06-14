@@ -1,4 +1,3 @@
-#include <stdexcept>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <sys/un.h>
@@ -8,8 +7,10 @@
 #include <unistd.h>
 #include <string.h>
 #include <stdbool.h>
+#include <stdexcept>
 #include <exception>
 #include <utility>
+#include <string>
 
 #include "common_socket.h"
 #include "common_Accion.h"
@@ -54,7 +55,7 @@ Socket& Socket::operator=(Socket&& other) {
     return *this;
 }
 
-Socket::Socket(Socket&& other) : sfd(other.sfd){
+Socket::Socket(Socket&& other) : sfd(other.sfd) {
     other.sfd = -1;
 }
 
@@ -137,7 +138,7 @@ void Socket::send(std::string const &msg) {
         if (sent == 0) {
             this->sfd = -1;
             break;
-        };
+        }
     }
 }
 
@@ -153,7 +154,7 @@ std::string Socket::readString() {
                 this->sfd = -1;
                 std::cerr << "Se cerró el socket" << std::endl;
                 break;
-            };
+            }
         } else {
             read += recv(this->sfd, &data[read-2], l - (read-2), MSG_NOSIGNAL);
         }
@@ -204,7 +205,7 @@ IAccion *Socket::read() {
 //     std::string str(is.rdbuf());
 //     send();
 //     return is;
-// } 
+// }
 
 std::ostream& Socket::operator<<(std::ostream& os) {
     os << readString();

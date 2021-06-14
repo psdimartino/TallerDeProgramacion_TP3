@@ -2,6 +2,7 @@
 #define SERVER_JUGADOR_H_
 
 #include <map>
+#include <string>
 #include "common_TaTeTi.h"
 #include "server_Thread.h"
 #include "common_socket.h"
@@ -23,7 +24,7 @@ class Jugador : public Thread {
     Jugador& operator=(Jugador&& other);
     Jugador(Jugador&& other);
 
-    virtual void run() override;
+    void run() override;
 };
 
 #endif  // SERVER_JUGADOR_H_

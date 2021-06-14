@@ -2,6 +2,7 @@
 #define SERVER_ACEPTADOR_H_
 
 #include <map>
+#include <string>
 #include <atomic>
 #include "common_TaTeTi.h"
 #include "server_Thread.h"
@@ -20,7 +21,7 @@ class Aceptador : public Thread {
     Aceptador& operator=(Aceptador&& other);
     Aceptador(Aceptador&& other);
     void stop();
-    virtual void run() override;
+    void run() override;
 };
 
 #endif  // SERVER_ACEPTADOR_H_

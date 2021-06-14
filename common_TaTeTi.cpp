@@ -19,17 +19,17 @@ std::ostream& operator<<(std::ostream &os, const TaTeTi &t) {
 
 TaTeTi& TaTeTi::operator=(TaTeTi&& other) {
     if (this != &other) {
-        memmove( this->tablero, other.tablero, 9 );
+        memmove(this->tablero, other.tablero, 9);
     }
     return *this;
 }
 
 TaTeTi::TaTeTi(TaTeTi&& other) {
-    memmove( this->tablero, other.tablero, 9 );
+    memmove(this->tablero, other.tablero, 9);
 }
 
 bool TaTeTi::sePuedeJugar(int const &i, int const &j) const {
-    return i < 3  && j < 3 && tablero[i][j] == VACIO ;
+    return i < 3  && j < 3 && tablero[i][j] == VACIO;
 }
 
 bool TaTeTi::estaTerminada() const {
@@ -113,12 +113,12 @@ char TaTeTi::obtenerGanador() const {  // 0 es sin ganador
 }
 
 bool TaTeTi::esElTurnoDe(char jugador) const {
-    return jugadas % 2? jugador == CRUZ : jugador == CIRCULO;
+    return (jugadas % 2)? jugador == CRUZ : jugador == CIRCULO;
 }
 
 void TaTeTi::esperarElTurnoDe(char const &jugador) {
     std::unique_lock<std::mutex> lg(m);
-    while(!esElTurnoDe(jugador) && !estaTerminada()) {
+    while (!esElTurnoDe(jugador) && !estaTerminada()) {
         cv.wait(lg);
     }
 }

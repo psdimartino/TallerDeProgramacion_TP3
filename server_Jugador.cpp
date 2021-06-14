@@ -1,5 +1,8 @@
-#include "server_Jugador.h"
+#include <utility>
+#include <string>
+
 #include "common_socket.h"
+#include "server_Jugador.h"
 
 Jugador::Jugador(std::map<std::string, TaTeTi> &tatetis, Socket &socket)
     : socket(std::move(socket)), tatetis(tatetis) {}
@@ -18,7 +21,7 @@ TaTeTi& Jugador::partida() {
     return tatetis[nombrePartida];
 }
 
-Jugador::Jugador(Jugador&& other) : socket(std::move(other.socket)), tatetis(other.tatetis){
+Jugador::Jugador(Jugador&& other) : socket(std::move(other.socket)), tatetis(other.tatetis) {
     this->jugador = other.jugador;
     this->nombrePartida = std::move(other.nombrePartida);
     // this->tatetis = other.tatetis;

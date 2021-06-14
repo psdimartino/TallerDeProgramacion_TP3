@@ -1,10 +1,11 @@
 #ifndef SERVER_SAFEMAP_H_
 #define SERVER_SAFEMAP_H_
 
-#include <map>
-#include <iostream>
-#include <mutex>
 #include <condition_variable>
+#include <iostream>
+#include <string>
+#include <mutex>
+#include <map>
 
 #include "common_TaTeTi.h"
 

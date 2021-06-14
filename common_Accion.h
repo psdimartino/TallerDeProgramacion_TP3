@@ -1,9 +1,10 @@
-#ifndef SERVER_ACCION_H_
-#define SERVER_ACCION_H_
+#ifndef COMMON_ACCION_H_
+#define COMMON_ACCION_H_
 
 #include <iostream>
+#include <sstream>
+#include <string>
 #include <map>
-#include <sstream> 
 
 #include "common_TaTeTi.h"
 
@@ -18,7 +19,7 @@ class IAccion {
 
 class Listar: public IAccion {
     public:
-     virtual void excecute(std::map<std::string, TaTeTi> &tatetis, std::string &nombrePartida, char &jugador) override;
+     void excecute(std::map<std::string, TaTeTi> &tatetis, std::string &nombrePartida, char &jugador) override;
 };
 
 class Crear: public IAccion {
@@ -28,29 +29,29 @@ class Crear: public IAccion {
     public:
      explicit Crear(std::string nombre);
      std::string const &getNombre() const;
-     virtual void excecute(std::map<std::string, TaTeTi> &tatetis, std::string &nombrePartida, char &jugador) override;
+     void excecute(std::map<std::string, TaTeTi> &tatetis, std::string &nombrePartida, char &jugador) override;
 };
 
 class Unirse: public IAccion {
     private:
      std::string nombre;
-    
+
     public:
      explicit Unirse(std::string nombre);
      std::string const &getNombre() const;
-     virtual void excecute(std::map<std::string, TaTeTi> &tatetis, std::string &nombrePartida, char &jugador) override;
+     void excecute(std::map<std::string, TaTeTi> &tatetis, std::string &nombrePartida, char &jugador) override;
 
 };
 
 class Jugar: public IAccion {
     private:
     int x, y;
-    
+
     public:
      Jugar(int const &x, int const &y);
      uint8_t getX() const;
      uint8_t getY() const;
-     virtual void excecute(std::map<std::string, TaTeTi> &tatetis, std::string &nombrePartida, char &jugador) override;
+     void excecute(std::map<std::string, TaTeTi> &tatetis, std::string &nombrePartida, char &jugador) override;
 };
 
-#endif  // SERVER_ACCION_H_
+#endif  // COMMON_ACCION_H_

@@ -4,6 +4,7 @@
 #include <sys/types.h>
 #include <netdb.h>
 #include <iostream>
+#include <string>
 
 #include "common_Accion.h"
 
@@ -37,7 +38,7 @@ class Socket {
     std::istream& operator>>(std::istream& is); // Para hacer el send (recibe desde istream)
     std::ostream& operator<<(std::ostream& is);  // Para hacer el read, emite a ostream
     bool isUp() const;
-    
+
     Socket& operator=(const Socket&) = delete;
    //  friend std::ostream& operator<<(std::ostream &os, const Socket &other);
     Socket& operator=(Socket&& other);
