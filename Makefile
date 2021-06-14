@@ -169,8 +169,7 @@ clean-obj:
 	$(RM) -f $(o_files) $(o-tsan_files)
 
 zip: clean
-	cppcheck --language=c++ --enable=all *.cpp *.h
 	zip -r entrega.zip ./common_src ./server_src ./client_src
 
 check: 
-	cppcheck --language=c++ --enable=all *.cpp *.h
+	cppcheck --language=c++ --enable=all ./common_src/*.h ./server_src/*.h ./client_src/*.h ./common_src/*.cpp ./server_src/*.cpp ./client_src/*.cpp
