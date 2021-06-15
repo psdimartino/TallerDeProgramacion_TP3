@@ -27,6 +27,8 @@ La clase `Aceptador` es la encargada de, cuando ingresa un nuevo cliente, acepta
 
 Para la transmisión de las acciones desde el cliente hacia el servidor se resolvio utilizar una clase abstracta del tipo `IAccion`. De esta clase heredan `Listar`, `Crear`, `Unirse` y `Jugar`. A dichas clases se les hace un *marshalling* por la clase wrapper de socket `Socket` del lado del cliente y un *unmarshalling* del lado del servidor. Luego simplemente se llama al método ejecutar, la cual realiza la implementación particular de cada una utilizando los distintos recursos.
 
+Para realizar la implementacion del polimorfismo se utilizo las clase `std::unique_ptr`. De esta manera se respeta la estrucrua RAII.
+
 Luego de realizar las operaciones necesarias, dichas clases guardan el resultado de la operacion en su atributo `resultado` para luego enviarlo hacia el cliente.
 
 La limitación en el largo máximo del buffer se da a que se utilizan 2 bytes para enviar el largo del string, permitiendonos esto enviar un máximo de 2^16 - 1 = 65535 caracteres. Se decide arbitrariamente que es largo suficientemente pequeño como para dimensionarlo de manera estática.
