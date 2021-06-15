@@ -12,7 +12,7 @@ Universidad de Buenos Aires
 
 ## Introduccion
 
-Se oriento la resolucion del problema 
+Para la resolución del problema se implementó una serialización y deserialización de objetos para enviarlos a travez del socket. De esta forma se pudieron transmitir las acciones con su respectiva información.
 
 ## Estructura general
 En el siguiente diagrama se puede apreciar la estructura general de las relaciones entre las clases mas relevantes:
