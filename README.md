@@ -17,7 +17,7 @@ Se oriento la resolucion del problema
 ## Estructura general
 En el siguiente diagrama se puede apreciar la estructura general de las relaciones entre las clases mas relevantes:
 
-![Diagrama principal de las relaciones entre clases](./diagrama.PNG)
+![Diagrama principal de las relaciones entre clases](diagrama.PNG)
 
 ### Nuevos clientes
 
