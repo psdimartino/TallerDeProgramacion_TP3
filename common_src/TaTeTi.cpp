@@ -1,14 +1,15 @@
 #include <string.h>
+#include <stdexcept>
 #include "../common_src/TaTeTi.h"
 TaTeTi::TaTeTi() {}
 
 std::ostream& operator<<(std::ostream &os, const TaTeTi &t) {
-    os << "   1 . 2 . 3 .\n";
+    os << "    1 . 2 . 3 .\n";
     os << "  +---+---+---+\n";
     for (int i = 0; i < 3; i++) {
-        os << i << " |";
+        os << i + 1 << " |";
         for (int j = 0; j < 3; j++) {
-            os << " " << t.tablero[i][j]  << " |";
+            os << " " << t.tablero[j][i]  << " |";
         }
         os << "\n  +---+---+---+\n";
     }
@@ -36,9 +37,7 @@ bool TaTeTi::estaTerminada() const {
 
 void TaTeTi::jugar(char const &jugador, int const &i, int const &j) {
     if (!sePuedeJugar(i, j)) {
-        // throw jugadores, i, j
-        std::cerr << "No se puede jugar en " << i << " " << j << std::endl;
-        return;
+        throw std::runtime_error("Posiciones no validas");
     }
     tablero[i][j] = jugador;
     jugadas++;
@@ -47,14 +46,6 @@ void TaTeTi::jugar(char const &jugador, int const &i, int const &j) {
 
 
 bool TaTeTi::quedanEspaciosLibres() const {
-    // for (int i = 0; i < 3; ++i) {
-    //     for (int j = 0; j < 3; ++j) {
-    //         if (tablero[i][j] == VACIO) {
-    //             return true;
-    //         }
-    //     }
-    // }
-    // return false;
     return jugadas < 9;
 }
 
@@ -96,15 +87,12 @@ int TaTeTi::obtenerGanadorDiagonales() const {
 char TaTeTi::obtenerGanador() const {  // 0 es sin ganador
     char aux;
     if ((aux = obtenerGanadorDiagonales()) != 0) {
-        std::cerr << "Gano por diagonales " << std::endl;
         return aux;
     }
     if ((aux = obtenerGanadorFilas()) != 0) {
-        std::cerr << "Gano por filas " << std::endl;
         return aux;
     }
     if ((aux = obtenerGanadorColumnas()) != 0) {
-        std::cerr << "Gano por columnas " << std::endl;
         return aux;
     }
     return VACIO;
@@ -114,9 +102,21 @@ bool TaTeTi::esElTurnoDe(char jugador) const {
     return (jugadas % 2)? jugador == CRUZ : jugador == CIRCULO;
 }
 
-void TaTeTi::esperarElTurnoDe(char const &jugador) {
+void TaTeTi::esperarElTurnoDe(char const &jugador) const {
     std::unique_lock<std::mutex> lg(m);
     while (!esElTurnoDe(jugador) && !estaTerminada()) {
         cv.wait(lg);
     }
 }
+
+bool TaTeTi::estaLlena() {
+    return jugadores == 2;
+}
+
+void TaTeTi::unirse() {
+    if (estaLlena()) {
+        throw std::runtime_error("Se intentó unirse a una partida llena");
+    }
+    jugadores++;
+}
+

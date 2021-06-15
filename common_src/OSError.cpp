@@ -1,3 +1,4 @@
+#include <iostream>
 #include <string.h>
 #include <errno.h>
 #include <cstdio>
@@ -13,4 +14,8 @@ OSError::OSError(const char* fmt, ...) noexcept {
     va_end(args);
     strncpy(msg_error+s, strerror(_errno), BUF_LEN-s);
     msg_error[BUF_LEN-1] = 0;
+}
+
+const char * OSError::what() const throw() {
+    return msg_error;
 }

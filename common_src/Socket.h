@@ -5,8 +5,13 @@
 #include <netdb.h>
 #include <iostream>
 #include <string>
+#include <memory>
 
 #include "../common_src/Accion.h"
+#include "../common_src/Listar.h"
+#include "../common_src/Crear.h"
+#include "../common_src/Jugar.h"
+#include "../common_src/Unirse.h"
 
 #define LISTAR 0x6C
 #define CREAR 0x6E
@@ -34,15 +39,12 @@ class Socket {
     void send(Jugar const &jugar);
     void send(std::string const &msg);
     std::string readString();
-    IAccion *read();
-    std::istream& operator>>(std::istream& is);
-    std::ostream& operator<<(std::ostream& is);
-    bool isUp() const;
+    std::unique_ptr<IAccion> read();
 
     Socket& operator=(const Socket&) = delete;
-   //  friend std::ostream& operator<<(std::ostream &os, const Socket &other);
     Socket& operator=(Socket&& other);
     Socket(Socket&& other);
+    void close();
 };
 
 #endif  // COMMON_SRC_SOCKET_H_

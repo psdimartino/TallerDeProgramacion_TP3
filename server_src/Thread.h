@@ -14,13 +14,13 @@ class Thread {
         Thread();
         void start();
         void join();
+        virtual void stop() = 0;
         virtual void run() = 0;
         virtual ~Thread();
         Thread(const Thread&) = delete;
         Thread& operator=(const Thread&) = delete;
         Thread(Thread&& other);
         Thread& operator=(Thread&& other);
-        bool isDead() const;
 };
 
 #endif  // SERVER_SRC_THREAD_H_

@@ -24,7 +24,3 @@ Thread& Thread::operator=(Thread&& other) {
     }
     return *this;
 }
-
-bool Thread::isDead() const {
-    return !this->is_running;
-}

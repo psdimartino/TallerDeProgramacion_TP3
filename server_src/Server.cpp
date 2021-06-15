@@ -1,49 +1,35 @@
 #include <stdlib.h>
 #include <string.h>
+#include <exception>
 
 #include "../common_src/Socket.h"
 #include "../server_src/Aceptador.h"
+#include "../common_src/OSError.h"
+#include "../server_src/Server.h"
 
-int main(int argc, char *argv[]) {
-    Socket socket(argv[1]);
-    Thread *t = new Aceptador(socket);
-    std::cerr << "New aceptador" << std::endl;
-    t->start();
-    std::cerr << "Running thread aceptador" << std::endl;
+void Server::jugar() {
+    Aceptador aceptador(socket);
+    aceptador.start();
     char c = 'a';
     while (c != 'q') {
         std::cin >> c;
     }
-    // t.stop();
-
-    // for (int ronda = 0; ronda < 9 ; ronda++) {
-    //     int ganador, i = 0, j = 0, turno = ronda % 2 + 1;
-    //     std::cout << "Ronda " << ronda << " juega " << turno << std::endl;
-    //     do {
-    //         std::cout << "Ingrese las coordenadas: ";
-    //         std::cin >> i >> j;
-    //         i--; j--;
-    //     } while (!tateti.sePuedeJugar(i, j));
-    //     tateti.jugar(turno, i , j);
-    //     std::cout << tateti << std::endl;
-    //     if ((ganador = tateti.obtenerGanador()) != 0) {
-    //         std::cout << "Ganó el jugador " << ganador << "!" << std::endl;
-    //         break;
-    //     }
-    //     if ( !tateti.quedanEspaciosLibres() ) {
-    //         std::cout << "Empataron" << std::endl;
-    //         break;
-    //     }
-    // }
-
-    // Socket socket;
-    // socket.bind(argv[1]);
-    // socket.listen();
-    // socket.accept();
-    // while (1) {
-    //     IAccion* accion = socket.read();
-    //     socket.send(accion->excecute(tateti));
-    //     delete accion;
-    // }
-    return 0;
+    try {
+        aceptador.stop();
+        aceptador.join();
+    } catch (OSError& e) {
+        e.what();
+    }
 }
+
+Server::Server(const char *port) : socket(Socket(port)) {}
+
+Server& Server::operator=(Server&& other) {
+    if (this != &other) {
+        socket = std::move(other.socket);
+    }
+    return *this;
+}
+
+Server::Server(Server&& other)
+: socket(std::move(other.socket)) {}

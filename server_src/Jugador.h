@@ -6,6 +6,7 @@
 #include "../common_src/TaTeTi.h"
 #include "../server_src/Thread.h"
 #include "../common_src/Socket.h"
+#include "../common_src/MapaDePartidas.h"
 
 
 class Jugador : public Thread {
@@ -13,18 +14,17 @@ class Jugador : public Thread {
     Socket socket;
     char jugador = VACIO;
     std::string nombrePartida;
-    std::map<std::string, TaTeTi> &tatetis;
-
-    TaTeTi& partida();
+    MapaDePartidas &partidas;
     bool estaEnUnaPartida() const;
 
  public:
-    Jugador(std::map<std::string, TaTeTi> &tatetis, Socket &socket);
+    Jugador(MapaDePartidas &partidas, Socket &socket);
     Jugador& operator=(const Jugador&) = delete;
     Jugador& operator=(Jugador&& other);
     Jugador(Jugador&& other);
 
     void run() override;
+    void stop() override;
 };
 
 #endif  // SERVER_SRC_JUGADOR_H_
